@@ -1,23 +1,5 @@
 <template>
   <div class="landingpage">
-    <div class="navbar">
-      <a class="navlogo">CROSSFIT</a>
-      <button class="hamburger">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
-          <path d="M3 12h18M3 6h18M3 18h18" />
-        </svg>
-      </button>
-      <div class="navlinkwrap">
-        <a href="#" class="navlink selectedlink">Home</a>
-        <a href="#" class="navlink">Location</a>
-        <a href="#" class="navlink">Blog</a>
-        <a href="#" class="navlink">My Profile</a>
-      </div>
-      <div class="buttonwrap">
-        <button class="createbtn selectedbtn">SIGN IN</button>
-      </div>
-    </div>
     <div class="box">
       <div class="infobox">
         <p class="infobox-boldtext">
@@ -37,9 +19,7 @@
           alt="unsplash-OG44d93i-NJk" border="0">
         <div class="infowrapper">
           <div class="info">
-            <img class="info-img"
-              src="@/assets/짱구.jpg"
-              alt="unsplash-OG44d93i-NJk" border="0">
+            <img class="info-img" src="@/assets/짱구.jpg" alt="unsplash-OG44d93i-NJk" border="0">
             <div>
               <p>Kimwonny</p>
             </div>
@@ -59,9 +39,7 @@
       </div>
       <div class="nft">
         <div class=item>
-          <img class="item-img"
-          src="@/assets/logo.png"
-            alt="unsplash-OG44d93i-NJk" border="0">
+          <img class="item-img" src="@/assets/logo.png" alt="unsplash-OG44d93i-NJk" border="0">
           <div class="item-title">
             <p>Lorem Ipsum</p>
             <p>1.20 Weth</p>
@@ -69,9 +47,7 @@
           <p class="item-date">Ends in 01.34.45</p>
         </div>
         <div class=item>
-          <img class="item-img"
-            src="@/assets/logo.png"
-            alt="unsplash-OG44d93i-NJk" border="0">
+          <img class="item-img" src="@/assets/logo.png" alt="unsplash-OG44d93i-NJk" border="0">
           <div class="item-title">
             <p>Lorem Ipsum</p>
             <p>1.20 Weth</p>
@@ -79,9 +55,7 @@
           <p class="item-date">Ends in 01.34.45</p>
         </div>
         <div class=item>
-          <img class="item-img"
-          src="@/assets/logo.png" 
-            border="0">
+          <img class="item-img" src="@/assets/logo.png" border="0">
           <div class="item-title">
             <p>Lorem Ipsum</p>
             <p>1.20 Weth</p>
@@ -89,9 +63,7 @@
           <p class="item-date">Ends in 01.34.45</p>
         </div>
         <div class=item>
-          <img class="item-img"
-          src="@/assets/logo.png"
-            alt="unsplash-OG44d93i-NJk" border="0">
+          <img class="item-img" src="@/assets/logo.png" alt="unsplash-OG44d93i-NJk" border="0">
           <div class="item-title">
             <p>Lorem Ipsum</p>
             <p>1.20 Weth</p>
@@ -100,7 +72,6 @@
         </div>
       </div>
     </div>
-   
     <div class="footer">
       <div class="footer-main">
         Etiam et id tincidunt faucibus mollis a sociis pretium fermentum quis magna faucibus lacus.
@@ -114,36 +85,28 @@
         </div>
       </div>
     </div>
-    <div class="footer2">
-      <div></div>
-      <p>Crossfit</p>
-    </div>
   </div>
 </template>
 
 <script>
+export default {
+  methods: {
+    signin() {
+      this.$router.push("/signin");
+    }
+  }
+}
 
 </script>
-<style lang="scss">
-body {
-  margin: 0;
-  background-color: #252954;
-
-}
-
-.hidden {
-  display: none;
-}
-
+<style lang="scss" scoped>
 .landingpage {
   margin: 0 auto;
   padding: 0 150px;
-  position: relative;
+  // position: relative;
   max-width: 100vw;
-
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #1F1D2B;
+  background-color: #1f2034;
 
   &::before {
     content: "";
@@ -153,7 +116,7 @@ body {
     left: 60%;
     top: 138px;
     filter: blur(90px);
-    background-color: #FB37FF;
+    background-color: #feafff;
   }
 
   &::after {
@@ -204,69 +167,6 @@ body {
     justify-content: space-between;
     padding-bottom: 30px;
     border-top: 1px solid #F2F2F2;
-  }
-}
-
-.navbar {
-  .hamburgerlogowrap {
-    display: flex;
-    align-items: center;
-  }
-
-  .hamburger {
-    display: none;
-    color: #D7D7D7;
-    background-color: #1F1D2B;
-    border: none;
-    margin-right: 10px;
-  }
-
-  .createbtn {
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    width: 126px;
-    height: 45px;
-    color: #BCBCBC;
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-
-    &.selectedbtn {
-      border: 1px solid #D7D7D7;
-      border-radius: 10px;
-    }
-  }
-
-  .navlogo {
-    height: 100%;
-    background: linear-gradient(93.51deg, #9B51E0 2.84%, #3081ED 99.18%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-  }
-
-  .navlink {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    color: #BCBCBC;
-
-    &.selectedlink {
-      background: linear-gradient(93.51deg, #9B51E0 2.84%, #3081ED 99.18%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      border-bottom: 1.5px solid #9B51E0;
-    }
-
-    &:not(:last-child) {
-      margin-right: 32px;
-    }
   }
 }
 
@@ -356,6 +256,7 @@ body {
     max-height: 450px;
     max-width: 50%;
     overflow: hidden;
+    z-index: 1;
 
     &-nft {
       object-fit: cover;
@@ -574,57 +475,6 @@ body {
     font-size: 14px;
     letter-spacing: 1.5px;
     color: #BCBCBC;
-  }
-}
-
-.footer {
-  &-main {
-    max-width: 40%;
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 30px;
-    line-height: 40px;
-    color: #FFFFFF;
-  }
-
-  &-navigate {
-    display: flex;
-
-    .nav {
-      margin-left: 60px;
-
-      h5 {
-        margin: 0;
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 30px;
-        color: #FFFFFF;
-      }
-
-      p {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 18px;
-        letter-spacing: 0.03em;
-        color: #D7D7D7;
-      }
-    }
-  }
-}
-
-.footer2 {
-  p {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 36px;
-    color: #828282;
   }
 }
 
@@ -942,4 +792,5 @@ body {
   to {
     transform: translateX(0px);
   }
-}</style>
+}
+</style>

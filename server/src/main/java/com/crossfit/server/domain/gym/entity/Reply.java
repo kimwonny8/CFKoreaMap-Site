@@ -17,7 +17,7 @@ public class Reply {
     private Long id;
 
     @Column(columnDefinition = "TEXT")
-    private String contnent;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
