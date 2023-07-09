@@ -10,7 +10,6 @@
         </p>
         <div class="infobox-btnwrapper">
           <button class="infobox-explorebtn selected">Explore</button>
-          <!-- <button class="infobox-createbtn">Create</button> -->
         </div>
       </div>
       <div class="display">
