@@ -20,8 +20,10 @@ export default {
 
 </script>
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&family=Noto+Sans+KR&display=swap');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans KR', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -111,10 +113,9 @@ body {
     cursor: pointer;
     background-color: transparent;
     border: none;
-    width: 126px;
-    height: 45px;
+    width: 100px;
+    height: 40px;
     color: #BCBCBC;
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -130,14 +131,12 @@ body {
     background: linear-gradient(93.51deg, #9B51E0 2.84%, #3081ED 99.18%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
     font-size: 32px;
   }
 
   .navlink {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
