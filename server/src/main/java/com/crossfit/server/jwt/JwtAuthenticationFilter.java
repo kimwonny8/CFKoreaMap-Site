@@ -1,4 +1,4 @@
-package com.crossfit.server.config.jwt;
+package com.crossfit.server.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

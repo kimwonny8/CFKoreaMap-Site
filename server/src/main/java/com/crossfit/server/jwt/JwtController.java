@@ -1,4 +1,4 @@
-package com.crossfit.server.config.jwt;
+package com.crossfit.server.jwt;
 
 import com.crossfit.server.dto.member.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
