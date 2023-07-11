@@ -5,8 +5,11 @@ import com.crossfit.server.dto.member.LoginResponseDto;
 import com.crossfit.server.dto.member.MemberDto;
 import com.crossfit.server.entity.Authority;
 import com.crossfit.server.entity.Member;
+import com.crossfit.server.exception.user.EmailDuplicationException;
+import com.crossfit.server.exception.user.PasswordMismatchException;
+import com.crossfit.server.exception.user.UserNotFoundException;
+import com.crossfit.server.jwt.JwtTokenProvider;
 import com.crossfit.server.repository.MemberRepository;
-import com.crossfit.server.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,7 +23,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
@@ -34,14 +36,19 @@ public class MemberService {
         String email = dto.getEmail();
         String password = dto.getPassword();
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password);
-
-        Authentication auth = authenticationManagerBuilder.getObject().authenticate(authToken);
+        UsernamePasswordAuthenticationToken authToken;
+        Authentication auth;
+        try {
+            authToken = new UsernamePasswordAuthenticationToken(email, password);
+            auth = authenticationManagerBuilder.getObject().authenticate(authToken);
+        } catch (Exception e) {
+            throw new PasswordMismatchException();
+        }
 
         LoginResponseDto loginResponseDto = jwtTokenProvider.generateToken(auth);
-
         Member member = memberRepository.findByEmail(dto.getEmail())
-                .orElseThrow(()->new RuntimeException());
+                .orElseThrow(()-> new UserNotFoundException());
+
         member.updateToken(email, loginResponseDto.getRefreshToken());
         memberRepository.save(member);
 
@@ -49,21 +56,21 @@ public class MemberService {
     }
 
     @Transactional
-    public Member register(MemberDto dto) {
+    public void register(MemberDto dto) {
         Set<Authority> authorities = new HashSet<>();
         Authority userAuthority = new Authority("ROLE_USER");
         authorities.add(userAuthority);
 
         Optional<Member> existingMember = memberRepository.findByEmail(dto.getEmail());
         if (existingMember.isPresent()) {
-            throw new RuntimeException();
+            throw new EmailDuplicationException();
         }
 
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         dto.setPassword(encodedPassword);
         dto.setAuthorities(authorities);
         dto.setActivated(true);
-        return memberRepository.save(dto.toEntity());
+        memberRepository.save(dto.toEntity());
     }
 
 }

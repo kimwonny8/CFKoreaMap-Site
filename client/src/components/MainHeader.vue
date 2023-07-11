@@ -1,7 +1,7 @@
 <template>
   <div class="landingpage">
     <div class="navbar">
-      <a class="navlogo" href="/">CrossFit</a>
+      <a class="navlogo" href="/">CFKoreaMap</a>
       <button class="hamburger">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">

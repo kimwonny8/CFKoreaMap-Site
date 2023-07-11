@@ -7,7 +7,7 @@
           <input type="text" v-model.trim="form.email" required=true  maxlength="100">
           <label>email</label>
         </div>
-        <div class="user-box">
+        <div class="user-box" @keyup.enter="signin()">
           <input type="password" v-model="form.password" required=true  maxlength="100">
           <label>password</label>
         </div>
@@ -66,14 +66,13 @@ export default {
       }
       await axios.post(`${process.env.VUE_APP_API_PATH}/api/v1/auth/login`, this.form)
         .then((res) => {
-          alert("환영합니다!");
           this.$store.commit("setAccessToken", res.data);
           this.$store.commit("setUser", this.form.email);
           this.$router.push('/');
         })
-        .catch(error => {
-          alert("아이디 또는 비밀번호 확인 후 시도해 주세요.");
-          console.log(error);
+        .catch((err) => {
+          alert(err.response.data.message);
+          console.log(err);
         });
     },
     async signup() {
@@ -86,13 +85,13 @@ export default {
         return;
       }
       await axios.post(`${process.env.VUE_APP_API_PATH}/api/v1/auth`, this.form)
-        .then(() => {
-          alert("회원가입 성공! 로그인 후 이용해주세요!");
+        .then((res) => {
+          alert(res.data);
           this.$router.push('/');
         })
-        .catch(error => {
-          alert("이미 사용중인 아이디 입니다. 다시 입력해주세요.");
-          console.log(error);
+        .catch((err) => {
+          alert(err.response.data.message);
+          console.log(err.response.data.message);
         });
     }
   }

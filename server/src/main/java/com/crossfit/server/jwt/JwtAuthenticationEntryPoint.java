@@ -1,4 +1,4 @@
-package com.crossfit.server.config.jwt;
+package com.crossfit.server.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
