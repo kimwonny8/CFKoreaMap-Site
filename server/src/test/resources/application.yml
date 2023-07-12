@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:h2:~/test
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  profiles:
+    active: local
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: h2
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:table.sql
+      data-locations: classpath:data.sql
+
+jwt:
+  secret-key: jwtfsdsndstesttesttestetestetestetestetestetestetes!

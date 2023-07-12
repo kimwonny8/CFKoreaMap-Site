@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Auth API", description="로그인, 회원가입, 로그아웃 API")
+@Tag(name = "Auth API", description = "로그인, 회원가입, 로그아웃 API")
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     private final MemberService memberService;
@@ -55,6 +55,7 @@ public class AuthController {
     }
 
     @GetMapping("")
+    @Operation(summary = "로그아웃")
     public void logout(HttpServletResponse response){
         Cookie cookie = new Cookie("refreshToken", null);
         cookie.setPath("/");
