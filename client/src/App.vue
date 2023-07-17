@@ -29,10 +29,24 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 body {
   margin: 0;
   background-color: #1f2034;
+}
 
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  height: 30%;
+  background: rgb(77, 77, 77);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgba(131, 131, 131, 0.1);
 }
 
 .hidden {
