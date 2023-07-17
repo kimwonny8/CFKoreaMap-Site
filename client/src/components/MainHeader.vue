@@ -10,7 +10,7 @@
       </button>
       <div class="navlinkwrap">
         <a href="#" class="navlink selectedlink">Home</a>
-        <a href="#" class="navlink">Location</a>
+        <a href="/map" class="navlink">Map</a>
         <a href="#" class="navlink">Blog</a>
         <a href="#" class="navlink">My Profile</a>
       </div>
