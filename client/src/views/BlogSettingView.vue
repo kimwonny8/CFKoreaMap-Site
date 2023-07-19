@@ -2,7 +2,9 @@
   <div class="setting">
     <Sidebar />
     <main class="main">
-      <router-view></router-view>
+      <div class="main_form">
+        <router-view></router-view>
+      </div>
     </main>
   </div>
 </template>
