@@ -20,7 +20,8 @@
 ```
 Vue3, Axios
 
-Java 17, Spring Boot 2.7.10, Spring Security, Spring Data JPA, JWT, Swagger, Junit5, Mockmvc, Kakao map api
+Java 17, Spring Boot 2.7.10, Spring Security, Spring Data JPA, JWT,
+Swagger, Junit5, Mockmvc, Kakao map api
 
 MySQL
 ```
