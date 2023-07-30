@@ -12,6 +12,7 @@ const store = createStore({
         email: null,
         name: null,
       },
+      blogId: null
     }
   },
   getters: {
@@ -37,6 +38,9 @@ const store = createStore({
       alert('세션 만료로 로그아웃 되었습니다. 다시 로그인 후 이용해주세요');
       location.href="/";
     },
+    setBlogId(state, id) {
+      state.blogId  = id;
+    }
   },
   actions: {
     async getAccessToken({ commit }) {
