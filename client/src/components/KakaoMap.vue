@@ -20,7 +20,7 @@
           <li v-for="(place, index) in places" :key="index" class="item">
             <span :class="'markerbg marker_' + (index + 1)"></span>
             <div class="info">
-              <router-link :to="`/blog/${place.road_address_name}`" class="gym_btn">{{ place.place_name }}</router-link>
+              <span class="gym_btn" @click="goToBlog(place.id)">{{ place.place_name }}</span>
               <span v-if="place.road_address_name">{{ place.road_address_name }}</span>
               <span class="jibun gray">{{ place.address_name }}</span>
               <span class="tel">{{ place.phone }}</span>
@@ -60,6 +60,10 @@ export default {
     }
   },
   methods: {
+    goToBlog(id) {
+      this.$router.push('/blog');
+      this.$store.commit('setBlogId', id); 
+    },
     locationLoadSuccess(pos) {
       this.latitude = pos.coords.latitude;
       this.longitude = pos.coords.longitude;
@@ -122,6 +126,7 @@ export default {
 
       ps.keywordSearch(this.keyword, (data, status, pagination) => {
         if (status === kakao.maps.services.Status.OK) {
+          // console.log(data);
           this.places = data;
           this.pagination = pagination;
           this.displayPlaces();

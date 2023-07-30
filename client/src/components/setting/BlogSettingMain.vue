@@ -5,7 +5,7 @@
     <div  class="blog_create_form">
       <h3>블로그 생성</h3>
       <div class="text_form">
-        <input type="text" class="input_text" placeholder="블로그이름">
+        <input type="text" class="input_text" placeholder="이름">
       </div>
       <div class="text_form">
         <input type="text" class="input_text" placeholder="상세설명">

@@ -11,7 +11,7 @@
       <div class="navlinkwrap">
         <a href="#" class="navlink selectedlink">Home</a>
         <a href="/map" class="navlink">Map</a>
-        <a href="/blog/setting" class="navlink">Blog</a>
+        <a href="/blogsetting/main" class="navlink">Blog</a>
         <a href="#" class="navlink">My Page</a>
       </div>
       <div v-if="!this.$store.getters.isLogin" class="buttonwrap">

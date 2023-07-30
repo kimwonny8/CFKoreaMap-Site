@@ -2,12 +2,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/HomeView.vue'
 import SignIn from '../views/SignInView.vue'
 import Map from '../views/MapView.vue'
+
 import BlogMain from '../views/BlogMainView.vue';
+import BlogPost from '@/components/blog/BlogPost.vue';
+import BlogAbout from '@/components/blog/BlogAbout.vue';
+import BlogGuestBook from '@/components/blog/BlogGuestBook.vue';
+
 import BlogSetting from '../views/BlogSettingView.vue';
-import BlogSettingMain from '@/components/BlogSettingMain.vue';
-import BlogMember from '@/components/BlogMember.vue';
-import BlogDetails from '@/components/BlogDetails.vue';
-import BlogPost from '@/components/BlogPost.vue';
+import BlogSettingMain from '@/components/setting/BlogSettingMain.vue';
+import BlogSettingMember from '@/components/setting/BlogSettingMember.vue';
+import BlogSettingPost from '@/components/setting/BlogSettingPost.vue';
 
 const routes = [
   {
@@ -26,34 +30,47 @@ const routes = [
     component: Map
   },
   {
-    path: '/blog/:name',
+    path: '/blog',
     name: 'BlogMain',
     component: BlogMain,
-  },
+    props: true,
+    children: [
+      {
+        path: '',
+        name: 'BlogAbout',
+        component: BlogAbout
+      },
+      {
+        path: 'posts',
+        name: 'BlogPost',
+        component: BlogPost
+      },
+      {
+        path: 'guestbook',
+        name: 'BlogGuestBook',
+        component: BlogGuestBook
+      },
+    ]
+  }, 
   {
-    path: '/blog',
+    path: '/blogsetting',
     name: 'BlogSetting',
     component: BlogSetting,
     children: [
       {
-        path: 'setting',
+        path: 'main',
         name: 'BlogSettingMain',
         component: BlogSettingMain
       },
       {
         path: 'member',
-        name: 'BlogMember',
-        component: BlogMember
-      },
-      {
-        path: 'details',
-        name: 'BlogDetails',
-        component: BlogDetails
+        name: 'BlogSettingMember',
+        component: BlogSettingMember
       },
       {
         path: 'post',
-        name: 'BlogPost',
-        component: BlogPost
+        name: 'BlogSettingPost',
+        component: BlogSettingPost
       }
     ]
   }
