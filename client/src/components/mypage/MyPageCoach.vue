@@ -4,15 +4,15 @@
     <h3>코치 등록</h3>
     <p>본인 센터의 주소, 사업자 등록증 사진을 첨부해주세요.<br>심사는 최대 1주일 소요됩니다.</p>
     <div class="text_form">
-      <input type="text" class="input_text" @click="openPostcode()" placeholder="우편번호" v-model="zonecode">
+      <input type="text" class="input_text" @click="openPostcode()" placeholder="우편번호" v-model="form.zoneCode">
     </div>
     <div class="text_form">
-      <input type="text" class="input_text" placeholder="센터이름" v-model="roadAddress">
+      <input type="text" class="input_text" placeholder="센터이름" v-model="form.name">
     </div>
     <div class="text_form">
       <input type="file" name="file" id="file" accept="image/png, image/jpg, image/jpeg">
-      </div>
-    <button class="btn">확인</button>
+    </div>
+    <button class="btn" @click="roleUpdate()">확인</button>
   </div>
 
   <!-- 코치 등록 대기중 -->
@@ -21,10 +21,7 @@
     <p>현재 입력하신 정보를 확인중입니다.<br>심사는 최대 1주일 소요됩니다.</p>
     <!-- 입력한 데이터와 날짜 출력 예정 -->
     <div class="text_form">
-      <input type="text" class="input_text" placeholder="센터이름" readonly>
-    </div>
-    <div class="text_form">
-      <input type="text" class="input_text" placeholder="신청한 날짜" readonly>
+      <input type="text" class="input_text" placeholder="센터이름" v-model="form.name" readonly>
     </div>
   </div>
   <!-- 코치 -->
@@ -32,7 +29,7 @@
     <h3>반갑습니다!</h3>
     <p>코치님과 연결된 센터 정보입니다.</p>
     <div class="text_form">
-      <input type="text" class="input_text" placeholder="센터이름" readonly>
+      <input type="text" class="input_text" placeholder="센터이름" v-model="form.name" readonly>
     </div>
     <button class="btn">⭐블로그로 이동하기⭐</button>
     <button class="btn">연결끊기</button>
@@ -40,26 +37,82 @@
 </template>
     
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       isCoach: false,
-      email: null,
-      zonecode: "",
-      roadAddress: "",
-      detailAddress: "",
+      form: {
+        email: null,
+        zoneCode: "",
+        roadAddress: "",
+        name: ""
+      }
     }
   },
-  mounted() {
-    this.email = this.$store.state.user.email;
+  async mounted() {
+    this.form.email = this.$store.state.user.email;
+    await this.getRole();
   },
   methods: {
+    async getRole() {
+      await axios.get(`${process.env.VUE_APP_API_PATH}/api/v1/gym/role`, {
+        params: { email: this.form.email }, headers: this.$store.getters.headers
+      })
+        .then((res) => {
+          this.isCoach = res.data.status;
+          this.form.name = res.data.name;
+          // console.log(res);
+        })
+        .catch(async (err) => {
+          console.log(err);
+          if (err.response && err.response.status === 401) {
+            try {
+              const accessTokenUpdated = await this.$store.dispatch("getAccessToken");
+              if (accessTokenUpdated) {
+                await this.getRole();
+              } else {
+                store.commit('setAccessTokenAndUser', null);
+              }
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        })
+    },
+    async roleUpdate() {
+      await axios.post(`${process.env.VUE_APP_API_PATH}/api/v1/gym/role`,
+        this.form , {headers: this.$store.getters.headers})
+        .then((res)=> {
+          alert(res.data);
+          this.$router.go();
+        })
+        .catch(async (err) => {
+          console.log(err);
+          if (err.response && err.response.status === 401) {
+            try {
+              const accessTokenUpdated = await this.$store.dispatch("getAccessToken");
+              if (accessTokenUpdated) {
+                await this.roleUpdate();
+              } else {
+                store.commit('setAccessTokenAndUser', null);
+              }
+            } catch (err) {
+              console.log(err);
+            }
+          }
+          else {
+            alert(err.response.data.message);
+          }
+        })
+    },
     openPostcode() {
       new window.daum.Postcode({
         oncomplete: (data) => {
           console.log(data);
-          this.zonecode = data.zonecode;
-          this.roadAddress = data.roadAddress;
+          this.form.zoneCode = data.zonecode;
+          this.form.roadAddress = data.roadAddress;
         },
       }).open();
     },
@@ -118,14 +171,14 @@ input[type=file]::file-selector-button {
   width: 140px;
   height: 30px;
   background: #ccc;
-  border: 1px solid rgb(77,77,77);
+  border: 1px solid rgb(77, 77, 77);
   border-radius: 10px;
   cursor: pointer;
   margin-right: 10px;
+
   &:hover {
-    background: rgb(77,77,77);
+    background: rgb(77, 77, 77);
     color: #fff;
   }
 }
-
 </style>
