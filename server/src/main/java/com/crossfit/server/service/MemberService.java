@@ -31,6 +31,12 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
+    public Member findId(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException());
+        return member;
+    }
+
     @Transactional
     public LoginResponseDto login(LoginRequestDto dto) {
         String email = dto.getEmail();
@@ -73,4 +79,19 @@ public class MemberService {
         memberRepository.save(dto.toEntity());
     }
 
+    public void addRoleCoach(String email) {
+        Member member = findId(email);
+        member.getAuthorities().add(new Authority("ROLE_COACH"));
+//        Set<Authority> authorities = member.getAuthorities();
+//        authorities.clear(); // 기존 권한들을 모두 제거합니다.
+//        authorities.add(new Authority("ROLE_COACH")); // 새로운 권한을 추가합니다.
+        memberRepository.save(member);
+    }
+
+    public void removeRoleCoach(String email) {
+        Member member = findId(email);
+        Set<Authority> authorities = member.getAuthorities();
+        authorities.removeIf(authority -> authority.getAuthorityName().equals("ROLE_COACH"));
+        memberRepository.save(member);
+    }
 }

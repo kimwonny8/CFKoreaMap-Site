@@ -63,4 +63,16 @@ public class AuthController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
+
+    @GetMapping("/coach")
+    @Operation(summary = "코치 등급 추가")
+    public void addRoleCoach(@RequestParam String email){
+        memberService.addRoleCoach(email);
+    }
+
+    @GetMapping("/user")
+    @Operation(summary = "코치 등급 삭제")
+    public void removeRoleCoach(@RequestParam String email){
+        memberService.removeRoleCoach(email);
+    }
 }
