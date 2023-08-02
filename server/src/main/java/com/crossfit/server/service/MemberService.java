@@ -1,5 +1,6 @@
 package com.crossfit.server.service;
 
+import com.crossfit.server.dto.gym.MyPageRequestDto;
 import com.crossfit.server.dto.member.LoginRequestDto;
 import com.crossfit.server.dto.member.LoginResponseDto;
 import com.crossfit.server.dto.member.MemberDto;
@@ -82,9 +83,6 @@ public class MemberService {
     public void addRoleCoach(String email) {
         Member member = findId(email);
         member.getAuthorities().add(new Authority("ROLE_COACH"));
-//        Set<Authority> authorities = member.getAuthorities();
-//        authorities.clear(); // 기존 권한들을 모두 제거합니다.
-//        authorities.add(new Authority("ROLE_COACH")); // 새로운 권한을 추가합니다.
         memberRepository.save(member);
     }
 
