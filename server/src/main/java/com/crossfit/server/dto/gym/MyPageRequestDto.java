@@ -9,6 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 public class MyPageRequestDto {
 
+    private Long id;
+
     private String email;
 
     private String name;
@@ -25,6 +27,7 @@ public class MyPageRequestDto {
 
     public Gym toEntity() {
         return Gym.builder()
+                .id(id)
                 .name(name)
                 .zoneCode(zoneCode)
                 .roadAddress(roadAddress)
@@ -33,4 +36,6 @@ public class MyPageRequestDto {
                 .member(member)
                 .build();
     }
+
+
 }

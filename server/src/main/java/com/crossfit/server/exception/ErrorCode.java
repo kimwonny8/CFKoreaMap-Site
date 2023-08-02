@@ -21,12 +21,13 @@ public enum ErrorCode {
 
     // Member
     PASSWORD_MISMATCH_ERROR(HttpStatus.BAD_REQUEST, "M001", "이메일 또는 비밀번호가 잘못 입력되었습니다."),
-    EMAIL_DUPLICATION(HttpStatus.BAD_REQUEST, "M002", "중복된 이메일입니다."),
-    USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "M003", "존재하지 않는 회원입니다."),
+    EMAIL_DUPLICATION(HttpStatus.CONFLICT, "M002", "중복된 이메일입니다."),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "M003", "존재하지 않는 회원입니다."),
     USER_NOT_AUTHENTICATION(HttpStatus.UNAUTHORIZED, "M004", "권한이 없는 사용자입니다."),
 
     // Gym
-    GYM_DUPLICATION(HttpStatus.BAD_REQUEST, "G001", "이미 등록된 센터입니다.");
+    GYM_DUPLICATION(HttpStatus.CONFLICT, "G001", "이미 등록된 센터입니다."),
+    GYM_NOT_FOUND(HttpStatus.NOT_FOUND, "G002", "등록된 센터가 아닙니다(없습니다).");
 
     private final HttpStatus status;
     private final String code;

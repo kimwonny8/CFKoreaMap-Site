@@ -49,4 +49,13 @@ public class Gym {
         this.fileName = fileName;
         this.member = member;
     }
+
+    public void updateStatus(String status){
+        this.status = status;
+    }
+
+    public void deleteCoach(String status, Member member){
+        this.status = status;
+        this.member = member;
+    }
 }
