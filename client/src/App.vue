@@ -30,6 +30,10 @@ export default {
   color: #2c3e50;
 }
 
+input {
+  font-family: 'Noto Sans KR', Avenir, Helvetica, Arial, sans-serif;
+}
+
 body {
   margin: 0;
   background-color: #1f2034;

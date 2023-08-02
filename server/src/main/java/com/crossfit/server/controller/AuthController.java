@@ -1,8 +1,10 @@
 package com.crossfit.server.controller;
 
+import com.crossfit.server.dto.gym.MyPageRequestDto;
 import com.crossfit.server.dto.member.LoginRequestDto;
 import com.crossfit.server.dto.member.LoginResponseDto;
 import com.crossfit.server.dto.member.MemberDto;
+import com.crossfit.server.service.GymService;
 import com.crossfit.server.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     private final MemberService memberService;
+    private final GymService gymService;
 
     @PostMapping("")
     @Operation(summary = "회원 가입")
@@ -63,4 +66,17 @@ public class AuthController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
+
+    // 추후 AdminController 로 이동
+    @GetMapping("/coach")
+    @Operation(summary = "코치 등급 추가")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "코치 등급 추가 성공"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 사용자"),
+    })
+    public void addRoleCoach(@RequestParam String email){
+        memberService.addRoleCoach(email);
+        gymService.deleteOrUpdateRole(email);
+    }
+
 }

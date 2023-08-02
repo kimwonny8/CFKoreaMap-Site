@@ -1,5 +1,6 @@
 package com.crossfit.server.service;
 
+import com.crossfit.server.dto.gym.MyPageRequestDto;
 import com.crossfit.server.dto.member.LoginRequestDto;
 import com.crossfit.server.dto.member.LoginResponseDto;
 import com.crossfit.server.dto.member.MemberDto;
@@ -30,6 +31,12 @@ public class MemberService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    public Member findId(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException());
+        return member;
+    }
 
     @Transactional
     public LoginResponseDto login(LoginRequestDto dto) {
@@ -73,4 +80,16 @@ public class MemberService {
         memberRepository.save(dto.toEntity());
     }
 
+    public void addRoleCoach(String email) {
+        Member member = findId(email);
+        member.getAuthorities().add(new Authority("ROLE_COACH"));
+        memberRepository.save(member);
+    }
+
+    public void removeRoleCoach(String email) {
+        Member member = findId(email);
+        Set<Authority> authorities = member.getAuthorities();
+        authorities.removeIf(authority -> authority.getAuthorityName().equals("ROLE_COACH"));
+        memberRepository.save(member);
+    }
 }
