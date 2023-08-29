@@ -5,7 +5,7 @@
 </template>
 <script>
 // import axios from 'axios';
-import KakaoMap from '@/components/KakaoMap.vue';
+import KakaoMap from '@/components/map/KakaoMap.vue';
 
 export default {
   data() {

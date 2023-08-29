@@ -3,7 +3,6 @@
     <div  class="blog_create_form">
       <h3>본인 확인</h3>
       <p>본인 확인을 위해 비밀번호를 입력해주세요.</p>
-
       <div class="text_form">
         <input type="text" class="input_text" placeholder="비밀번호">
       </div>
