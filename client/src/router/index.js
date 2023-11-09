@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import store from '../store';
 import Home from '../views/HomeView.vue';
 import SignIn from '../views/SignInView.vue';
 import Map from '../views/MapView.vue';
@@ -16,6 +17,24 @@ import BlogSettingPost from '@/components/setting/BlogSettingPost.vue';
 import MyPage from '@/views/MyPageView.vue';
 import MyPageMain from '@/components/mypage/MyPageMain.vue';
 import MyPageCoach from '@/components/mypage/MyPageCoach.vue';
+
+const requireAuth = () => (from, to, next) => {
+  const isLogin = store.getters.isLogin;
+  if (!isLogin) {
+    alert("로그인 후 이용 가능합니다.");
+    return history.back()
+  }
+  return next() 
+}
+
+const requireAuthCoach = () => (from, to, next) => {
+  const isCoached = store.getters.isCoached;
+  if (!isCoached) {
+    alert("코치 회원만 이용 가능합니다.");
+    return history.back()
+  }
+  return next()
+}
 
 const routes = [
   {
@@ -37,6 +56,7 @@ const routes = [
     path: '/mypage',
     name: 'MyPage',
     component: MyPage,
+    beforeEnter: requireAuth(),
     props: true,
     children: [
       {
@@ -78,6 +98,7 @@ const routes = [
     path: '/blogsetting',
     name: 'BlogSetting',
     component: BlogSetting,
+    beforeEnter: requireAuthCoach(),
     children: [
       {
         path: 'main',

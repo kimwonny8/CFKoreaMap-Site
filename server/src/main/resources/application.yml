@@ -35,3 +35,9 @@ springdoc:
     operations-sorter: alpha
     display-operation-id: true
     display-request-duration: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+  config:
+    classpath: logback-dev.xml

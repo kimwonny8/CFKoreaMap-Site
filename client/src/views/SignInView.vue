@@ -25,11 +25,11 @@
           <label>userName</label>
         </div>
         <div class="user-box">
-          <input type="password" v-model="form.password" required=true maxlength="100">
+          <input type="password" v-model.trim="form.password" required=true maxlength="100">
           <label>password</label>
         </div>
         <div class="user-box">
-          <input type="password" v-model="password2" required=true maxlength="100">
+          <input type="password" v-model.trim="password2" required=true maxlength="100">
           <label>confirm password</label>
         </div>
         <button class="login-btn" @click="changeForm()">signin</button>
