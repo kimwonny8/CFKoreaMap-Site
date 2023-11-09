@@ -1,6 +1,5 @@
 package com.crossfit.server.service;
 
-import com.crossfit.server.dto.gym.MyPageRequestDto;
 import com.crossfit.server.dto.member.LoginRequestDto;
 import com.crossfit.server.dto.member.LoginResponseDto;
 import com.crossfit.server.dto.member.MemberDto;
@@ -12,9 +11,11 @@ import com.crossfit.server.exception.user.UserNotFoundException;
 import com.crossfit.server.jwt.JwtTokenProvider;
 import com.crossfit.server.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -48,6 +50,7 @@ public class MemberService {
         try {
             authToken = new UsernamePasswordAuthenticationToken(email, password);
             auth = authenticationManagerBuilder.getObject().authenticate(authToken);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         } catch (Exception e) {
             throw new PasswordMismatchException();
         }

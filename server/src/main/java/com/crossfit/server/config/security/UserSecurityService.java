@@ -1,4 +1,4 @@
-package com.crossfit.server.jwt;
+package com.crossfit.server.config.security;
 
 import com.crossfit.server.entity.Member;
 import com.crossfit.server.repository.MemberRepository;

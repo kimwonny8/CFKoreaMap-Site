@@ -1,6 +1,6 @@
 package com.crossfit.server.controller;
 
-import com.crossfit.server.config.SecurityConfig;
+import com.crossfit.server.config.security.SecurityConfig;
 import com.crossfit.server.jwt.JwtAccessDeniedHandler;
 import com.crossfit.server.jwt.JwtAuthenticationEntryPoint;
 import com.crossfit.server.jwt.JwtTokenProvider;

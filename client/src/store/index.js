@@ -11,13 +11,20 @@ const store = createStore({
         id: 0,
         email: null,
         name: null,
+        role: null,
       },
       blogId: null
     }
   },
   getters: {
     isLogin(state) {
-      return state.accessToken == null ? false : true;
+      return state.accessToken !== null;
+    },
+    isCoached(state) {
+      if(state.user.role === "[ROLE_COACH]"){
+        return true;
+      }
+      else return false;
     },
     headers(state) {
       return {
@@ -31,6 +38,9 @@ const store = createStore({
     },
     setUser(state, _email) {
       state.user.email = _email;
+    },
+    setUserRole(state, _role) {
+      state.user.role = _role;
     },
     setAccessTokenAndUser(state, accessToken) {
       state.accessToken = accessToken;

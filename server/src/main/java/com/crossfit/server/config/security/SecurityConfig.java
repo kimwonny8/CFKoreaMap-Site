@@ -1,9 +1,9 @@
-package com.crossfit.server.config;
+package com.crossfit.server.config.security;
 
-import com.crossfit.server.jwt.JwtTokenProvider;
 import com.crossfit.server.jwt.JwtAccessDeniedHandler;
 import com.crossfit.server.jwt.JwtAuthenticationEntryPoint;
 import com.crossfit.server.jwt.JwtAuthenticationFilter;
+import com.crossfit.server.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
