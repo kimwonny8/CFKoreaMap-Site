@@ -6,7 +6,6 @@ import com.crossfit.server.entity.Gym;
 import com.crossfit.server.entity.Member;
 import com.crossfit.server.exception.gym.GymDuplicationException;
 import com.crossfit.server.exception.gym.GymNotFoundException;
-import com.crossfit.server.exception.user.UserNotFoundException;
 import com.crossfit.server.repository.GymRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GymService {
+public class MyPageService {
 
     private final GymRepository gymRepository;
     private final MemberService memberService;
@@ -25,11 +24,14 @@ public class GymService {
         Member member = memberService.findId(email);
 
         Gym gym = gymRepository.findByMemberId(member.getId())
-                .orElseThrow(() -> new GymNotFoundException());
+                .orElseThrow(GymNotFoundException::new);
 
         MyPageResponseDto dto = new MyPageResponseDto();
-        dto.setName(gym.getName());
+        dto.setGymName(gym.getGymName());
         dto.setStatus(gym.getStatus());
+        dto.setZoneCode(gym.getZoneCode());
+        dto.setRoadAddress(gym.getRoadAddress());
+        dto.setKakaoId(gym.getKakaoId());
 
         return dto;
     }
@@ -37,8 +39,8 @@ public class GymService {
     public Gym updateRole(MyPageRequestDto dto, String status) {
         Member member = memberService.findId(dto.getEmail());
 
-        Optional<Gym> optionalGym = gymRepository.findByName(dto.getName());
-        if (optionalGym.isPresent() && !optionalGym.get().getStatus().equals("wait")) {
+        Optional<Gym> optionalGym = gymRepository.findByGymName(dto.getGymName());
+        if (optionalGym.isPresent()) {
             throw new GymDuplicationException();
         } else {
             dto.setMember(member);

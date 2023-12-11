@@ -3,7 +3,7 @@ package com.crossfit.server.controller;
 import com.crossfit.server.dto.member.LoginRequestDto;
 import com.crossfit.server.dto.member.LoginResponseDto;
 import com.crossfit.server.dto.member.MemberDto;
-import com.crossfit.server.service.GymService;
+import com.crossfit.server.service.MyPageService;
 import com.crossfit.server.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthController {
 
     private final MemberService memberService;
-    private final GymService gymService;
+    private final MyPageService myPageService;
 
     @PostMapping("")
     @Operation(summary = "회원 가입")
@@ -86,7 +86,7 @@ public class AuthController {
     })
     public void addRoleCoach(@RequestParam String email){
         memberService.addRoleCoach(email);
-        gymService.deleteOrUpdateRole(email);
+        myPageService.deleteOrUpdateRole(email);
     }
 
 }

@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 public class LoginResponseDto {
 
+    private String gym;
     private String roles;
     private String grantType;
     private String accessToken;

@@ -29,13 +29,14 @@ public class JwtTokenProvider {
     private final MemberRepository memberRepository;
     private final Key key;
     private final int ACCESS_TOKEN_SECOND = 60 * 30 * 1000;
-    private long REFRESH_TOKEN_SECOND = 60 * 60 * 24 * 14 * 1000 ;
+    private final long REFRESH_TOKEN_SECOND = 60 * 60 * 24 * 14 * 1000 ;
 
     public JwtTokenProvider(@Value("${jwt.secret-key}") String secretKey, MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
+
 
     public LoginResponseDto generateToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
@@ -52,6 +53,7 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
+        // 리프레시 토큰에도 만료 시간 설정
         Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_SECOND);
         String refreshToken = Jwts.builder()
                 .setExpiration(refreshTokenExpiresIn)
@@ -69,15 +71,16 @@ public class JwtTokenProvider {
     public String generateAccessToken(String refreshToken) {
         String accessToken = null;
 
-        Member member = getMemberByRefreshToken(refreshToken);
-        if (member != null) {
+        if (validateRefreshToken(refreshToken)) {
+            Member member = getMemberByRefreshToken(refreshToken);
             String username = member.getEmail();
             List<GrantedAuthority> authorities = member.getAuthorities().stream()
                     .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                     .collect(Collectors.toList());
 
             Date accessTokenExpiresIn = new Date(System.currentTimeMillis() + ACCESS_TOKEN_SECOND);
-            String newAccessToken = Jwts.builder()
+
+            accessToken = Jwts.builder()
                     .setSubject(username)
                     .claim("auth", authorities.stream()
                             .map(GrantedAuthority::getAuthority)
@@ -85,12 +88,11 @@ public class JwtTokenProvider {
                     .setExpiration(accessTokenExpiresIn)
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
-
-            accessToken = newAccessToken;
         }
 
         return accessToken;
     }
+
 
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);

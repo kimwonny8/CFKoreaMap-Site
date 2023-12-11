@@ -3,11 +3,13 @@ package com.crossfit.server.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@ToString
 @NoArgsConstructor
 public class Gym {
 
@@ -17,7 +19,7 @@ public class Gym {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String gymName;
 
     @Column
     private String kakaoId;
@@ -39,9 +41,9 @@ public class Gym {
     private Member member;
 
     @Builder
-    public Gym(Long id, String name, String kakaoId, String zoneCode, String roadAddress, String status, String fileName, Member member) {
+    public Gym(Long id, String gymName, String kakaoId, String zoneCode, String roadAddress, String status, String fileName, Member member) {
         this.id = id;
-        this.name = name;
+        this.gymName = gymName;
         this.kakaoId = kakaoId;
         this.zoneCode = zoneCode;
         this.roadAddress = roadAddress;

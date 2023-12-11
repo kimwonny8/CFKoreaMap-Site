@@ -1,5 +1,6 @@
 package com.crossfit.server.dto.gym;
 
+import com.crossfit.server.entity.Gym;
 import lombok.*;
 
 @Getter
@@ -9,7 +10,10 @@ import lombok.*;
 @ToString
 public class MyPageResponseDto {
 
-    private String name;
-
+    private String gymName;
     private String status;
+    private String kakaoId;
+    private String zoneCode;
+    private String roadAddress;
+
 }

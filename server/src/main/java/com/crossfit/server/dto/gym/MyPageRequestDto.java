@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class MyPageRequestDto {
 
@@ -13,7 +14,7 @@ public class MyPageRequestDto {
 
     private String email;
 
-    private String name;
+    private String gymName;
 
     private String zoneCode;
 
@@ -28,7 +29,7 @@ public class MyPageRequestDto {
     public Gym toEntity() {
         return Gym.builder()
                 .id(id)
-                .name(name)
+                .gymName(gymName)
                 .zoneCode(zoneCode)
                 .roadAddress(roadAddress)
                 .status(status)

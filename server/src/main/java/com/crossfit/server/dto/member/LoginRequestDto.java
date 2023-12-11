@@ -12,11 +12,4 @@ public class LoginRequestDto {
     private String email;
     private String password;
 
-    public Member toEntity() {
-        return Member.builder()
-                .email(email)
-                .password(password)
-                .build();
-    }
-
 }

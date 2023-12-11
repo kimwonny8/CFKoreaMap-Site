@@ -12,6 +12,7 @@ const store = createStore({
         email: null,
         name: null,
         role: null,
+        gym: null,
       },
       blogId: null
     }
@@ -36,11 +37,10 @@ const store = createStore({
     setAccessToken(state, _accessToken) {
       state.accessToken = _accessToken;
     },
-    setUser(state, _email) {
-      state.user.email = _email;
-    },
-    setUserRole(state, _role) {
-      state.user.role = _role;
+    setUser(state, _form) {
+      state.user.email = _form.email;
+      state.user.role = _form.role;
+      state.user.gym = _form.gym;
     },
     setAccessTokenAndUser(state, accessToken) {
       state.accessToken = accessToken;
@@ -48,14 +48,14 @@ const store = createStore({
       alert('세션 만료로 로그아웃 되었습니다. 다시 로그인 후 이용해주세요');
       location.href="/";
     },
-    setBlogId(state, id) {
-      state.blogId  = id;
+    setBlogId(state, _id) {
+      state.blogId  = _id;
     }
   },
   actions: {
     async getAccessToken({ commit }) {
       try {
-        const response = await axios.post("/api/v1/jwt");
+        const response = await axios.post(`${process.env.VUE_APP_API_PATH}/api/v1/jwt`);
         const accessToken = response.data.accessToken;
         commit("setAccessToken", accessToken);
         console.log("Access Token 발급 완료: " + accessToken);

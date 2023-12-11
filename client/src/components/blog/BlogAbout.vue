@@ -64,6 +64,7 @@ export default {
   mounted() {
     this.blogId = this.$store.state.blogId;
     // DB에 id 있는지 확인
+    console.log(this.$store.state.blogId);
   },
   methods: {
     editNoticePost() {

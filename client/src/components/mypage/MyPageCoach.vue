@@ -1,13 +1,13 @@
 <template>
   <!-- 코치 등록 안되어 있을 때 -->
-  <div class="blog_create_form" v-if="isCoach === false">
+  <div class="blog_create_form" v-if="isCoach === false || isCoach == undefined">
     <h3>코치 등록</h3>
     <p>본인 센터의 주소, 사업자 등록증 사진을 첨부해주세요.<br>심사는 최대 1주일 소요됩니다.</p>
     <div class="text_form">
       <input type="text" class="input_text" @click="openPostcode()" placeholder="우편번호" v-model="form.zoneCode">
     </div>
     <div class="text_form">
-      <input type="text" class="input_text" placeholder="센터이름" v-model="form.name">
+      <input type="text" class="input_text" placeholder="센터이름" v-model="form.gymName">
     </div>
     <div class="text_form">
       <input type="file" name="file" id="file" accept="image/png, image/jpg, image/jpeg">
@@ -21,7 +21,7 @@
     <p>현재 입력하신 정보를 확인중입니다.<br>심사는 최대 1주일 소요됩니다.</p>
     <!-- 입력한 데이터와 날짜 출력 예정 -->
     <div class="text_form">
-      <input type="text" class="input_text" placeholder="센터이름" v-model="form.name" readonly>
+      <input type="text" class="input_text" placeholder="센터이름" v-model="form.gymName" readonly>
     </div>
   </div>
   <!-- 코치 -->
@@ -29,14 +29,15 @@
     <h3>반갑습니다!</h3>
     <p>코치님과 연결된 센터 정보입니다.</p>
     <div class="text_form">
-      <input type="text" class="input_text" placeholder="센터이름" v-model="form.name" readonly>
+      <input type="text" class="input_text" placeholder="센터이름" v-model="form.gymName" readonly>
     </div>
-    <button class="btn">⭐블로그로 이동하기⭐</button>
+    <button class="btn" @click="goToBlog()">⭐블로그로 이동하기⭐</button>
     <button class="btn" @click="deleteRoleCoach()">연결끊기</button>
   </div>
 </template>
     
 <script>
+import { tSMethodSignature } from '@babel/types';
 import axios from 'axios';
 
 export default {
@@ -45,24 +46,27 @@ export default {
       isCoach: false,
       form: {
         email: null,
+        kakaoId: null,
         zoneCode: "",
         roadAddress: "",
-        name: ""
+        gymName: "",
       }
     }
   },
   async mounted() {
+    //this.isCoach = this.$store.getters.isCoach;
     this.form.email = this.$store.state.user.email;
     await this.getRole();
   },
   methods: {
     async getRole() {
-      await axios.get(`${process.env.VUE_APP_API_PATH}/api/v1/gym/role`, {
-        params: { email: this.form.email }, headers: this.$store.getters.headers
+      await axios.get(`${process.env.VUE_APP_API_PATH}/api/v1/member/role`, {
+       headers: this.$store.getters.headers
       })
         .then((res) => {
           this.isCoach = res.data.status;
-          this.form.name = res.data.name;
+          this.form.gymName = res.data.gymName;
+          this.form.kakaoId = res.data.kakaoId;
         })
         .catch(async (err) => {
           console.log(err);
@@ -72,7 +76,7 @@ export default {
               if (accessTokenUpdated) {
                 await this.getRole();
               } else {
-                store.commit('setAccessTokenAndUser', null);
+                this.$store.commit('setAccessTokenAndUser', null);
               }
             } catch (err) {
               console.log(err);
@@ -81,8 +85,8 @@ export default {
         })
     },
     async addRoleCoach() {
-      await axios.post(`${process.env.VUE_APP_API_PATH}/api/v1/gym/role`,
-        this.form , {headers: this.$store.getters.headers})
+      await axios.post(`${process.env.VUE_APP_API_PATH}/api/v1/member/role`,
+        this.form, {headers: this.$store.getters.headers})
         .then((res)=> {
           alert(res.data);
           this.$router.go();
@@ -95,7 +99,7 @@ export default {
               if (accessTokenUpdated) {
                 await this.addRoleCoach();
               } else {
-                store.commit('setAccessTokenAndUser', null);
+                this.$store.commit('setAccessTokenAndUser', null);
               }
             } catch (err) {
               console.log(err);
@@ -107,7 +111,7 @@ export default {
         })
     },
     async deleteRoleCoach() {
-      await axios.put(`${process.env.VUE_APP_API_PATH}/api/v1/gym/role`,
+      await axios.put(`${process.env.VUE_APP_API_PATH}/api/v1/member/role`,
       {email: this.form.email}, { headers: this.$store.getters.headers})
         .then((res)=> {
           alert(res.data);
@@ -122,7 +126,7 @@ export default {
               if (accessTokenUpdated) {
                 await this.deleteRoleCoach();
               } else {
-                store.commit('setAccessTokenAndUser', null);
+                this.$store.commit('setAccessTokenAndUser', null);
               }
             } catch (err) {
               console.log(err);
@@ -142,7 +146,12 @@ export default {
         },
       }).open();
     },
+    goToBlog(){
+      this.$router.push('/blog');
+      this.$store.commit('setBlogId', this.form.kakaoId); 
+    },
   },
+
 
 }
 </script>

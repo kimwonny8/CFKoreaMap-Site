@@ -50,6 +50,8 @@ export default {
         email: null,
         password: null,
         name: null,
+        role: null,
+        gym: null
       }
     }
   },
@@ -66,9 +68,13 @@ export default {
       }
       await axios.post(`${process.env.VUE_APP_API_PATH}/api/v1/auth/login`, this.form)
         .then((res) => {
-          this.$store.commit("setAccessToken", res.data);
-          this.$store.commit("setUser", this.form.email);
+          this.form.role = res.data.roles;
+          this.form.gym = res.data.gym;
+          this.$store.commit("setAccessToken", res.data.accessToken);
+          this.$store.commit("setUser", this.form);
           this.$router.push('/');
+          console.log(res);
+
         })
         .catch((err) => {
           alert(err.response.data.message);

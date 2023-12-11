@@ -29,6 +29,17 @@
 import axios from "axios";
 
 export default {
+  data() {
+    return {
+      form: {
+        id: 0,
+        email: null,
+        name: null,
+        role: null,
+        gym: null,
+      },
+    }
+  },
   methods: {
     signin() {
       this.$router.push("/signin");
@@ -36,7 +47,7 @@ export default {
     async logout() {
       await axios.get(`${process.env.VUE_APP_API_PATH}/api/v1/auth`)
       this.$store.commit('setAccessToken', null);
-      this.$store.commit('setUser', null);
+      this.$store.commit('setUser', this.form);
       this.$router.push({ path: "/" });
     }
   }

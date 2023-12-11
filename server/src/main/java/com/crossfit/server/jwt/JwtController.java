@@ -17,7 +17,7 @@ public class JwtController {
 
     private final JwtService jwtService;
 
-    @PostMapping(value = "")
+    @PostMapping
     public ResponseEntity<LoginResponseDto> refreshToken(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         String refreshToken = null;
